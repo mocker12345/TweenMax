@@ -41,6 +41,17 @@ stop()：停止动画
 	
 	$('#stop').click(function(){
 		t.stop();
-	})play()：开始动画
-	$('play').click(function(){
-		t.play();	})reverse()：反向开始动画onComplete()：运动结束后触发对应的函数		onReverseComplete()：反向运动结束后触发对应的函数		
+	})
+
+play()：开始动画
+
+	$('#play').click(function(){
+		t.play();
+	})
+
+reverse()：反向开始动画
+
+onComplete()：运动结束后触发对应的函数
+		
+onReverseComplete()：反向运动结束后触发对应的函数
+		
