@@ -26,14 +26,15 @@
 		
 		<div id='demo1'></div>
 		<script>
-			$(function){
-				var t = new TimeLineMax();
-				//同时进行
-				t.to('#demo1',1,{width:200px,left:200px})
-				//依次进行
-				t.to('#demo1',1,{width:200px});
-				t.to('#demo1',2,{left:200px});
-			}
+			$(function(){
+                var t = new TimeLineMax();
+                //同时进行
+                t.to('#demo1',1,{width:200px,left:200px})
+                //依次进行
+                t.to('#demo1',1,{width:200px});
+                t.to('#demo1',2,{left:200px});
+
+			})
 		</script>
 ## 动画方法
 
@@ -41,6 +42,17 @@ stop()：停止动画
 	
 	$('#stop').click(function(){
 		t.stop();
-	})play()：开始动画
-	$('play').click(function(){
-		t.play();	})reverse()：反向开始动画onComplete()：运动结束后触发对应的函数		onReverseComplete()：反向运动结束后触发对应的函数		
+	})
+
+play()：开始动画
+
+	$('play').click(function(){
+		t.play();
+	})
+
+reverse()：反向开始动画
+
+onComplete()：运动结束后触发对应的函数
+		
+onReverseComplete()：反向运动结束后触发对应的函数
+		

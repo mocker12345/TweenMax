@@ -1,0 +1,224 @@
+@font-face {
+  font-family: 'latoregular';
+  src: url('./lato-reg-webfont-webfont.eot');
+  src: url('./lato-reg-webfont-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./lato-reg-webfont-webfont.woff') format('woff'),
+  url('./lato-reg-webfont-webfont.ttf') format('truetype'),
+  url('./lato-reg-webfont-webfont.svg#latoregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'latoblack';
+  src: url('./lato-bla-webfont.eot');
+  src: url('./lato-bla-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./lato-bla-webfont.woff') format('woff'),
+  url('./lato-bla-webfont.ttf') format('truetype'),
+  url('./lato-bla-webfont.svg#latoblack') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body, ul {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  border: none;
+}
+
+ul, p {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  font-family: latoregular;
+  font-size: 14px;
+  overflow-y: hidden;
+}
+
+.menu_wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.menu_wrapper .menu {
+  height: 78px;
+  position: absolute;
+  left: 22px;
+  top: 22px;
+  right: 22px;
+  opacity: 1;
+}
+
+.menu_wrapper .content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 217px;
+  background: #53d491;
+}
+
+.menu_wrapper .start {
+  position: absolute;
+  right: 0;
+  top:0;
+  bottom: 0;
+  width: 240px;
+  border: 7px solid #53D491;
+  letter-spacing: 2px;
+}
+
+.menu_wrapper .start .state {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top:0;
+  right: 0;
+  bottom: 0;
+  background: #32494E;
+  text-align: center;
+  color: #fff;
+
+}
+
+.menu_wrapper .start .state2 {
+  background: #fff;
+  top: 100%;
+  color:#666;
+}
+
+.menu_wrapper .start span{
+  position: relative;
+  top:24px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.logo {
+  position: absolute;
+  width: 123px;
+  height: 31px;
+  top:25px;
+  left: 28px;
+  background: url(../images/logo.png) no-repeat;
+}
+
+.nav{
+  position: absolute;
+  right: 87px;
+  top:0px;
+  bottom: 0px;
+  opacity: 1;
+}
+
+.nav li {
+  float: left;
+  font-size: 12px;
+  color: #fff;
+  height: 100%;
+  text-align: center;
+}
+
+.nav li a{
+  color: #fff;
+  display: block;
+  height: 100%;
+  line-height: 78px;
+  letter-spacing: 2px;
+  padding: 0px 20px;
+}
+
+.menu_wrapper .language {
+  position: absolute;
+  right: 40px;
+  top: 16px;
+  color: #F2F2F2;
+  font-size: 11px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.menu_wrapper .language .select {
+  position: relative;
+  height: 47px;
+  width: 47px;
+  cursor: pointer;
+  background: rgba(0,0,0,0.12);
+}
+
+.menu_wrapper .language .select span {
+  position: relative;
+  top: 16px;
+}
+
+.btn_mobile {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 55px;
+  height: 55px;
+  background: url("../images/scene1/btn_menu.png") center no-repeat;
+  cursor: pointer;
+  display: none;
+}
+.mobile_img {
+  display: none;
+}
+
+.line {
+  position: absolute;
+  top: 50px;
+  width: 30px;
+  height: 1px;
+  background: rgba(255,255,255,0.56);
+  opacity: 0;
+
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  right: 0px;
+}
+
+.dropdown .item {
+  position: relative;
+  display: block;
+  text-align: center;
+  padding: 18px 0px;
+  background: #FFF;
+  color: #32494E;
+  transition:background-color .5s;
+}
+
+.dropdown .item:hover{
+  transition:.5s;
+  background-color: #f4f4f4;
+}
+
+
+
+
+
+
+
+
+
+
+
