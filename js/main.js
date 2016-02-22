@@ -7,7 +7,6 @@ main.init = function () {
   main.resize();
   main.configNavAnimate();
   main.events();
-  $('body').height(8500);
   main.button3D('.start', '.state1', '.state2', 0.3);
 };
 
@@ -16,7 +15,21 @@ $(document).ready(main.init);
 main.resize = function () {
   $('.scene').height($(window).height());
   $(".scene:not(':first')").css('top', $(window).height());
+  if ($(window).width()<=950){
+    $("body").css("height",8500);
+    $("body").removeClass("r780").addClass("r950");
+    $(".menu").css("top",0);
+    $(".menu").css("transform","none");
+  }else {
+    $("body").removeClass("r780 r950");
+    $("body").css("height",8500);
+    $("body").removeClass("r950");
+    $(".menu").css("top",22);
+    $(".left_nav").css("left",-300);
+  }
+
 };
+$(window).resize(main.resize);
 
 main.configNavAnimate = function () {
   var initAnimate = new TimelineMax();

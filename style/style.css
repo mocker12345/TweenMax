@@ -213,6 +213,142 @@ body {
 
 
 
+.r950 .menu_wrapper {
+  left: 0 !important;
+  top:0;
+  right: 0;
+  z-index: 2;
+}
+
+.r950 .menu_wrapper .menu{
+
+  width: 100%;
+  height: 55px;
+  left: 0 !important;
+  right: 0 !important;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+.r950 .menu_wrapper .nav{
+  display: none;
+}
+.r950 .menu_wrapper .content{
+  right: 0;
+}
+.r950 .menu_wrapper .start{
+  display: none;
+}
+
+.r950 .menu_wrapper .language{
+  right: 0;
+  top:0;
+}
+
+.r950 .menu_wrapper .logo{
+  top:13px;
+  left: 50%;
+  margin-left: -61px;
+}
+
+.r950 .menu_wrapper .select{
+  width: 55px;
+  height: 55px;
+}
+
+.r950 .menu_wrapper .select span{
+  top:20px;
+  width: 55px;
+  height: 55px;
+}
+
+.r950 .btn_mobile {
+  display: block;
+}
+
+/* 可是区域宽度小于 780 */
+
+.r780 .wrapper {
+  position: static;
+}
+
+.r780 .scene{
+  position: relative !important;
+  top:0 !important;
+}
+.r780 .footer {
+  position: relative !important;
+  top:0 !important;
+}
+
+.r780 .mobile_img{
+  display: block;
+  margin: 0 auto;
+}
+.r780 .desk_img{
+  display: none;
+}
+
+.r780 .scene2,.r780 .scene3{
+  height: auto !important;
+}
+
+.r780 .scene2 .step,.r780 .scene3 .step {
+  display: block;
+  position: relative !important;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  opacity: 1;
+}
+
+.r780 .scene2 .step .left {
+  opacity: 1 !important;
+  width: 100% !important;
+  display: block !important;
+  /*position: relative; */
+}
+
+.r780 .scene2 .step .right{
+  width: 100%;
+  display: block !important;
+}
+.r780 .scene2 .step .scene2_1 img,
+.r780 .scene2 .step .right img,
+.r780 .scene3 .step img,
+.r780 .area_content img,
+.r780 .area_content .button1,
+.r780 .area_content .button2{
+  -webkit-transform: none !important;
+  -webkit-transform-origin:none !important;
+  opacity: 1 !important;
+
+}
+
+.r780 .area_content .lines{
+  display: none;
+}
+
+.r780 .scene4 .item{
+  width: 100% !important;
+  padding: 0px;
+  height: auto;
+}
+
+.r780 .points {
+  display: none !important;
+}
+
+.r780 .scene5_img {
+  display: none;
+}
+
+.r780 .area_content{
+  top:80px !important;
+}
+
+.r780 .button2:nth-of-type(2) {
+  margin-top: 20px;
+}
 
 
 .wrapper{
