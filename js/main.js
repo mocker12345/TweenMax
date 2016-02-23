@@ -17,6 +17,7 @@ $(document).ready(main.init);
 main.resize = function () {
   $('.scene').height($(window).height());
   $(".scene:not(':first')").css('top', $(window).height());
+  main.configInitScroll();
   if ($(window).width() <= 950) {
     $("body").css("height", 8500);
     $("body").removeClass("r780").addClass("r950");
@@ -105,6 +106,9 @@ main.button3D = function (obj, element1, element2, d) {
 };
 
 main.configInitScroll = function () {
+  var time = main.timeScroll ? main.timeScroll.time() : 0;
+  if (main.timeScroll) main.timeScroll.clear();
+
   main.timeScroll = new TimelineMax();
   main.timeScroll.add('step1');
   main.timeScroll.to('.scene2', 0.8, {top: 0, ease: Cubic.easeInOut});
@@ -117,7 +121,7 @@ main.configInitScroll = function () {
   main.timeScroll.add('step5');
 
   main.timeScroll.stop();
-
+  main.timeScroll.seek(time);
 
 };
 main.changeStep = function (value) {
@@ -168,6 +172,15 @@ main.changeStep = function (value) {
 
   }
 };
+main.scrollStatus = function () {
+  var times = main.scale() * main.timeScroll.totalDuration();
+  main.timeScroll.seek(times);
+};
+main.scale = function () {
+  var scrollT = $(window).scrollTop();
+  var maxH = $('body').height() - $(window).height();
+  return scrollT / maxH;
+};
 main.events = function () {
   main.nav();
   $(window).resize(main.resize);
@@ -176,6 +189,10 @@ main.events = function () {
   function scrollFn() {
     $(window).scrollTop(0);
   };
+
+  $(window).bind('scroll', main.scrollStatus);
+
+
   $('.wrapper').bind('mousewheel', function (ev) {
     ev.preventDefault();
   });
