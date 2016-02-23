@@ -127,6 +127,20 @@ main.changeStep = function (value) {
     var afterCurrentStep = main.timeScroll.getLabelAfter(currentTime);
     if (!afterCurrentStep) return;
 
+    var totalTime = main.timeScroll.totalDuration();
+
+    var afterTime = main.timeScroll.getLabelTime(afterCurrentStep);
+
+    var maxH = $('body').height() - $(window).height();
+
+    var scrollHeight = afterTime / totalTime * maxH;
+
+    var d = Math.abs(main.timeScroll.time() - afterTime);
+
+    var scrollAnimate = new TimelineMax();
+
+    scrollAnimate.to('body,html', d, {scrollTop: scrollHeight});
+
     main.timeScroll.tweenTo(afterCurrentStep);
     main.currentStep = afterCurrentStep;
   } else {
@@ -134,6 +148,20 @@ main.changeStep = function (value) {
 
     var prevCurrentStep = main.timeScroll.getLabelBefore(currentTime);
     if (!prevCurrentStep) return;
+
+    var totalTime = main.timeScroll.totalDuration();
+
+    var beforeTime = main.timeScroll.getLabelTime(prevCurrentStep);
+
+    var maxH = $('body').height() - $(window).height();
+
+    var scrollHeight = beforeTime / totalTime * maxH;
+
+    var d = Math.abs(main.timeScroll.time() - beforeTime);
+
+    var scrollAnimate = new TimelineMax();
+
+    scrollAnimate.to('body,html', d, {scrollTop: scrollHeight});
 
     main.timeScroll.tweenTo(prevCurrentStep);
     main.currentStep = prevCurrentStep;
@@ -144,7 +172,10 @@ main.events = function () {
   main.nav();
   $(window).resize(main.resize);
 
-
+  $(window).bind('scroll', scrollFn);
+  function scrollFn() {
+    $(window).scrollTop(0);
+  };
   $('.wrapper').bind('mousewheel', function (ev) {
     ev.preventDefault();
   });
@@ -152,6 +183,7 @@ main.events = function () {
   var timer = null;
 
   function mousewheelFn(ev, direction) {
+    $(window).unbind('scroll', scrollFn);
     if (direction < 1) { //向下
       main.changeStep('next');
     } else {
