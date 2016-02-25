@@ -48,7 +48,7 @@ main.configNavAnimate = function () {
   initAnimate.to(".scene1 .controls", 0.5, {bottom: 20, opacity: 1}, '-=1');
 
   initAnimate.to("body", 0, {"overflow-y": "scroll"});
-//
+
 };
 main.nav = function () {
   var navAnimate = new TimelineMax();
@@ -112,8 +112,14 @@ main.configInitScroll = function () {
   main.timeScroll = new TimelineMax();
   main.timeScroll.add('step1');
   main.timeScroll.to('.scene2', 0.8, {top: 0, ease: Cubic.easeInOut});
+  main.timeScroll.to({},0.1,{onComplete: function () {
+    menu.changeMenu("menu_state2");
+  },onReverseComplete:function (){
+    menu.changeMenu("menu_state1");
+  }},'-=0.2');
   main.timeScroll.add('step2');
   main.timeScroll.to('.scene3', 0.8, {top: 0, ease: Cubic.easeInOut});
+
   main.timeScroll.add('step3');
   main.timeScroll.to('.scene4', 0.8, {top: 0, ease: Cubic.easeInOut});
   main.timeScroll.add('step4');
@@ -121,7 +127,7 @@ main.configInitScroll = function () {
   main.timeScroll.add('step5');
 
   main.timeScroll.stop();
-  main.timeScroll.seek(time);
+  main.timeScroll.seek(time,false);
 
 };
 main.changeStep = function (value) {
@@ -144,8 +150,8 @@ main.changeStep = function (value) {
     var scrollAnimate = new TimelineMax();
 
     scrollAnimate.to('body,html', d, {scrollTop: scrollHeight});
-
-    main.timeScroll.tweenTo(afterCurrentStep);
+    console.log($('body').scrollTop());
+    //main.timeScroll.tweenTo(afterCurrentStep);
     main.currentStep = afterCurrentStep;
   } else {
     var currentTime = main.timeScroll.getLabelTime(main.currentStep);
@@ -167,19 +173,60 @@ main.changeStep = function (value) {
 
     scrollAnimate.to('body,html', d, {scrollTop: scrollHeight});
 
-    main.timeScroll.tweenTo(prevCurrentStep);
+    //main.timeScroll.tweenTo(prevCurrentStep);
     main.currentStep = prevCurrentStep;
 
   }
 };
 main.scrollStatus = function () {
   var times = main.scale() * main.timeScroll.totalDuration();
-  main.timeScroll.seek(times);
+  main.timeScroll.seek(times,false);
 };
 main.scale = function () {
   var scrollT = $(window).scrollTop();
   var maxH = $('body').height() - $(window).height();
   return scrollT / maxH;
+};
+main.mouseupFn = function () {
+  var scale = main.scale();
+  var times = scale * main.timeScroll.totalDuration();
+
+  var prevStep = main.timeScroll.getLabelBefore(times);
+  var nextStep = main.timeScroll.getLabelAfter(times);
+
+  var prevTime = main.timeScroll.getLabelTime(prevStep);
+  var nextTime = main.timeScroll.getLabelTime(nextStep);
+
+  var prevDvalue = Math.abs(prevTime-times);
+  var nextDvalue = Math.abs(nextTime-times);
+  var step = '';
+  if (scale ===0 ){
+    step = 'step1';
+  }else if (scale === 1){
+    step = 'step2';
+  }else if (prevDvalue <= nextDvalue){
+    step = prevStep;
+  }else {
+    step = nextStep;
+  }
+  main.timeScroll.tweenTo(step);
+
+  var totalTime = main.timeScroll.totalDuration();
+
+  var currentTime = main.timeScroll.getLabelTime(step);
+
+  var maxH = $('body').height() - $(window).height();
+
+  var scrollHeight = currentTime / totalTime * maxH;
+
+  var d = Math.abs(main.timeScroll.time() - currentTime);
+
+  var scrollAnimate = new TimelineMax();
+
+  scrollAnimate.to('body,html', d, {scrollTop: scrollHeight});
+
+  main.currentStep = step;
+
 };
 main.events = function () {
   main.nav();
@@ -188,10 +235,13 @@ main.events = function () {
   $(window).bind('scroll', scrollFn);
   function scrollFn() {
     $(window).scrollTop(0);
-  };
+  }
 
   $(window).bind('scroll', main.scrollStatus);
-
+  $(window).bind('mousedown', function () {
+    $(window).unbind('scroll',scrollFn);
+  });
+  $(window).bind('mouseup',main.mouseupFn);
 
   $('.wrapper').bind('mousewheel', function (ev) {
     ev.preventDefault();
@@ -211,4 +261,10 @@ main.events = function () {
       $('.wrapper').one('mousewheel', mousewheelFn);
     }, 1800);
   }
+};
+
+var menu = {};
+
+menu.changeMenu = function (stepClass) {
+  console.log(stepClass);
 };
