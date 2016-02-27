@@ -112,14 +112,22 @@ main.configInitScroll = function () {
   main.timeScroll = new TimelineMax();
   main.timeScroll.add('step1');
   main.timeScroll.to('.scene2', 0.8, {top: 0, ease: Cubic.easeInOut});
-  main.timeScroll.to({},0.1,{onComplete: function () {
-    menu.changeMenu("menu_state2");
-  },onReverseComplete:function (){
-    menu.changeMenu("menu_state1");
-  }},'-=0.2');
+  main.timeScroll.to({}, 0.1, {
+    onComplete: function () {
+      menu.changeMenu("menu_state2");
+    }, onReverseComplete: function () {
+      menu.changeMenu("menu_state1");
+    }
+  }, '-=0.3');
   main.timeScroll.add('step2');
   main.timeScroll.to('.scene3', 0.8, {top: 0, ease: Cubic.easeInOut});
-
+  main.timeScroll.to({}, 0.1, {
+    onComplete: function () {
+      menu.changeMenu("menu_state3");
+    }, onReverseComplete: function () {
+      menu.changeMenu("menu_state2");
+    }
+  }, "-=0.3");
   main.timeScroll.add('step3');
   main.timeScroll.to('.scene4', 0.8, {top: 0, ease: Cubic.easeInOut});
   main.timeScroll.add('step4');
@@ -127,7 +135,7 @@ main.configInitScroll = function () {
   main.timeScroll.add('step5');
 
   main.timeScroll.stop();
-  main.timeScroll.seek(time,false);
+  main.timeScroll.seek(time, false);
 
 };
 main.changeStep = function (value) {
@@ -150,7 +158,6 @@ main.changeStep = function (value) {
     var scrollAnimate = new TimelineMax();
 
     scrollAnimate.to('body,html', d, {scrollTop: scrollHeight});
-    console.log($('body').scrollTop());
     //main.timeScroll.tweenTo(afterCurrentStep);
     main.currentStep = afterCurrentStep;
   } else {
@@ -180,7 +187,7 @@ main.changeStep = function (value) {
 };
 main.scrollStatus = function () {
   var times = main.scale() * main.timeScroll.totalDuration();
-  main.timeScroll.seek(times,false);
+  main.timeScroll.seek(times, false);
 };
 main.scale = function () {
   var scrollT = $(window).scrollTop();
@@ -197,16 +204,16 @@ main.mouseupFn = function () {
   var prevTime = main.timeScroll.getLabelTime(prevStep);
   var nextTime = main.timeScroll.getLabelTime(nextStep);
 
-  var prevDvalue = Math.abs(prevTime-times);
-  var nextDvalue = Math.abs(nextTime-times);
+  var prevDvalue = Math.abs(prevTime - times);
+  var nextDvalue = Math.abs(nextTime - times);
   var step = '';
-  if (scale ===0 ){
+  if (scale === 0) {
     step = 'step1';
-  }else if (scale === 1){
+  } else if (scale === 1) {
     step = 'step2';
-  }else if (prevDvalue <= nextDvalue){
+  } else if (prevDvalue <= nextDvalue) {
     step = prevStep;
-  }else {
+  } else {
     step = nextStep;
   }
   main.timeScroll.tweenTo(step);
@@ -239,9 +246,9 @@ main.events = function () {
 
   $(window).bind('scroll', main.scrollStatus);
   $(window).bind('mousedown', function () {
-    $(window).unbind('scroll',scrollFn);
+    $(window).unbind('scroll', scrollFn);
   });
-  $(window).bind('mouseup',main.mouseupFn);
+  $(window).bind('mouseup', main.mouseupFn);
 
   $('.wrapper').bind('mousewheel', function (ev) {
     ev.preventDefault();
@@ -266,5 +273,24 @@ main.events = function () {
 var menu = {};
 
 menu.changeMenu = function (stepClass) {
-  console.log(stepClass);
+  var oldMenu = $('.menu');
+  var newMenu = oldMenu.clone();
+  newMenu.removeClass('menu_state1').removeClass('menu_state2').removeClass('menu_state3');
+  newMenu.addClass(stepClass);
+  oldMenu.addClass('removeClass');
+
+  $('.menu_wrapper').append(newMenu);
+  var menuAnimate = new TimelineMax();
+  main.nav();
+  main.button3D('.start', '.state1', '.state2', 0.3);
+  menuAnimate.clear();
+  menuAnimate.to(newMenu, 0, {top: 100, rotationX: -90, transformPerspective: 600, transformOrigin: 'top center'});
+  menuAnimate.to(oldMenu, 0, {top: 22, rotationX: 0, transformPerspective: 600, transformOrigin: 'center bottom'});
+  menuAnimate.to(oldMenu, 0.3, {
+    rotationX: 90, top: -55, ease: Cubic.easeInOut, onComplete: function () {
+      $('.removeClass').remove();
+    }
+  });
+  menuAnimate.to(newMenu, 0.3, {rotationX: 0, top: 22, ease: Cubic.easeInOut}, '-=0.3');
+
 };
