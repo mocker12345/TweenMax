@@ -9,8 +9,14 @@ main.init = function () {
   main.configNavAnimate();
   main.events();
   main.button3D('.start', '.state1', '.state2', 0.3);
+  main.button3D('.button1', '.state1', '.state2', 0.3);
+  main.button3D('.button2', '.state1', '.state2', 0.3);
+
+
   main.configInitScroll();
   twoAnimate.init();
+  threeAnimate.init();
+  fiveAnimate.init();
 };
 
 $(document).ready(main.init);
@@ -151,7 +157,9 @@ main.configInitScroll = function () {
   main.timeScroll.to({},0.4,{});
   main.timeScroll.add('point3');
 
-  main.timeScroll.to('.scene3', 0.8, {top: 0, ease: Cubic.easeInOut});
+  main.timeScroll.to('.scene3', 0.8, {top: 0, ease: Cubic.easeInOut,onReverseComplete: function () {
+    threeAnimate.threeLine.seek(0,false);
+  }});
   main.timeScroll.to({}, 0.1, {
     onComplete: function () {
       menu.changeMenu("menu_state3");
@@ -159,10 +167,26 @@ main.configInitScroll = function () {
       menu.changeMenu("menu_state2");
     }
   }, "-=0.3");
+  main.timeScroll.to({},0.1,{onComplete: function () {
+    threeAnimate.threeLine.tweenTo('state1');
+  }},'-=0.3');
   main.timeScroll.add('step3');
+  main.timeScroll.to({},0,{onComplete: function () {
+    threeAnimate.threeLine.tweenTo('state2');
+  },onReverseComplete: function () {
+    threeAnimate.threeLine.tweenTo('state1');
+  }});
+  main.timeScroll.to({},0.4,{});
+  main.timeScroll.add('threeState');
+
   main.timeScroll.to('.scene4', 0.8, {top: 0, ease: Cubic.easeInOut});
   main.timeScroll.add('step4');
-  main.timeScroll.to('.scene5', 0.8, {top: 0, ease: Cubic.easeInOut});
+  main.timeScroll.to('.scene5', 0.8, {top: 0, ease: Cubic.easeInOut,onReverseComplete:function(){
+    fiveAnimate.fiveLine.seek(0,false);
+  }},"-=0.8");
+  main.timeScroll.to({},0.1,{onComplete:function(){
+    fiveAnimate.fiveLine.tweenTo("fiveState");
+  }},"-=0.2");
   main.timeScroll.add('step5');
 
   main.timeScroll.stop();
@@ -333,12 +357,20 @@ twoAnimate.twoLine = new TimelineMax();
 twoAnimate.init = function () {
   twoAnimate.twoLine.staggerTo('.scene2_1 img',1.5,{opacity:1,rotationX:0},0.1);
 
+  twoAnimate.twoLine.to('.scene2 .points',0.5,{bottom:20},'-=1');
+  twoAnimate.twoLine.to(".scene2 .point0 .text",0.1,{opacity:1});
+  twoAnimate.twoLine.to(".scene2 .point0 .point_icon",0,{"background-position":"right top"});
+
   twoAnimate.twoLine.add('state1');
 
   twoAnimate.twoLine.staggerTo('.scene2_1 img',0.2,{opacity:0,rotationX:90},0);
   twoAnimate.twoLine.to('.scene2_2 .left',0.4,{opacity:1});
   twoAnimate.twoLine.staggerTo('.scene2_2 .right img',0.3,{opacity:1,rotationX:0},0,'-=0.4');
 
+  twoAnimate.twoLine.to(".scene2 .point .text",0,{opacity:0},"-=0.4");
+  twoAnimate.twoLine.to(".scene2 .point1 .text",0.1,{opacity:1});
+  twoAnimate.twoLine.to(".scene2 .point .point_icon",0,{"background-position":"left top"},"-=0.4");
+  twoAnimate.twoLine.to(".scene2 .point1 .point_icon",0,{"background-position":"right top"},"-=0.4");
   twoAnimate.twoLine.add('state2');
 
   twoAnimate.twoLine.to('.scene2_2 .left',0.4,{opacity:0});
@@ -346,13 +378,56 @@ twoAnimate.init = function () {
   twoAnimate.twoLine.to('.scene2_3 .left',0.4,{opacity:1});
   twoAnimate.twoLine.staggerTo('.scene2_3 .right img',0.3,{opacity:1,rotationX:0},0,'-=0.4');
 
+  twoAnimate.twoLine.to(".scene2 .point .text",0,{opacity:0},"-=0.4");
+  twoAnimate.twoLine.to(".scene2 .point2 .text",0.1,{opacity:1});
+  twoAnimate.twoLine.to(".scene2 .point .point_icon",0,{"background-position":"left top"},"-=0.4");
+  twoAnimate.twoLine.to(".scene2 .point2 .point_icon",0,{"background-position":"right top"},"-=0.4");
   twoAnimate.twoLine.add('state3');
 
   twoAnimate.twoLine.to('.scene2_3 .left',0.4,{opacity:0});
   twoAnimate.twoLine.staggerTo('.scene2_3 .right img',0.3,{opacity:0,rotationX:90},0,'-=0.4');
   twoAnimate.twoLine.to('.scene2_4 .left',0.4,{opacity:1});
   twoAnimate.twoLine.staggerTo('.scene2_4 .right img',0.3,{opacity:1,rotationX:0},0,'-=0.4');
+  twoAnimate.twoLine.to(".scene2 .point .text",0,{opacity:0},"-=0.4");
+  twoAnimate.twoLine.to(".scene2 .point3 .text",0.1,{opacity:1});
+  twoAnimate.twoLine.to(".scene2 .point .point_icon",0,{"background-position":"left top"},"-=0.4");
+  twoAnimate.twoLine.to(".scene2 .point3 .point_icon",0,{"background-position":"right top"},"-=0.4");
   twoAnimate.twoLine.add('state4');
 
   twoAnimate.twoLine.stop();
+};
+
+var threeAnimate = {};
+
+threeAnimate.threeLine = new TimelineMax();
+
+threeAnimate.init = function () {
+  threeAnimate.threeLine.to('.scene3 .step img',0,{opacity:0,rotationX:-90,transformPerspective:600,transformOrigin:'center center'});
+  threeAnimate.threeLine.staggerTo('.step3_1 img',0.2,{opacity:1,rotationX:0,ease:Cubic.easeInOut},0.1);
+
+  threeAnimate.threeLine.add('state1');
+  threeAnimate.threeLine.to('.step3_1 img',0.2,{opacity:0,rotationX:-90,ease:Cubic.easeInOut});
+  threeAnimate.threeLine.to(".step3_2 img",0.3,{opacity:1,rotationX:0,ease:Cubic.easeInOut});
+
+  threeAnimate.threeLine.add('state2');
+
+  threeAnimate.threeLine.stop();
+
+};
+
+var fiveAnimate = {};
+
+fiveAnimate.fiveLine = new TimelineMax();
+
+fiveAnimate.init = function () {
+  fiveAnimate.fiveLine.to(".scene5 .area_content img, .scene5 .button1,.scene5 .button2",0,{rotationX:-90,transformPerspective:600,transformOrigin:"center center"});
+  fiveAnimate.fiveLine.to(".scene5 .scene5_img",0,{top:-220});
+
+  fiveAnimate.fiveLine.to(".scene5 .scene5_img",0.5,{top:0,ease:Cubic.easeInOut});
+  fiveAnimate.fiveLine.staggerTo( ".scene5 .button1,.scene5 .button2,.scene5 .area_content img",1.2,{opacity:1,rotationX:0,ease:Elastic.easeOut},0.2 );
+
+  fiveAnimate.fiveLine.to(".scene5 .lines",0.5,{opacity:1});
+  fiveAnimate.fiveLine.add("fiveState");
+
+  fiveAnimate.fiveLine.stop();
 };
